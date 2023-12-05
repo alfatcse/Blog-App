@@ -10,7 +10,14 @@ type Mutation{
          name:String!,
          email:String!,
          password:String!
-        ):User
+        ):AuthPayload
+    signIn(
+         email:String!
+         password:String!
+        ):AuthPayload
+}
+type AuthPayload{
+    token:String
 }
 type Post{
     id:ID!
