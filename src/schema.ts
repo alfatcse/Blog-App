@@ -9,7 +9,8 @@ type Mutation{
     signup(
          name:String!,
          email:String!,
-         password:String!
+         password:String!,
+         bio:String
         ):AuthPayload
     signIn(
          email:String!
@@ -17,6 +18,7 @@ type Mutation{
         ):AuthPayload
 }
 type AuthPayload{
+    userError:String
     token:String
 }
 type Post{
