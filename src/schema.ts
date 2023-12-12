@@ -21,7 +21,7 @@ type Mutation{
         ):   PostPayload 
     updatePost(
         postId:ID!,
-        post:PostInput
+        post:PostInput!
         ):    PostPayload
 }
 

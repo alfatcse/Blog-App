@@ -24,4 +24,51 @@ export const postResolvers = {
       post: newPost,
     };
   },
+  updatePost: async (parent: any, args: any, { prisma, userInfo }: any) => {
+    if (!userInfo) {
+      return {
+        userError: "Unauthorized",
+        post: null,
+      };
+    }
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userInfo.userId,
+      },
+    });
+    if (!user) {
+      return {
+        userError: "User Not found",
+        post: null,
+      };
+    }
+    const post = await prisma.post.findUnique({
+      where: {
+        id: Number(args.postId),
+      },
+    });
+    if (!post) {
+      return {
+        userError: "Post Not found",
+        post: null,
+      };
+    }
+    if (post.authorId !== user.id) {
+      return {
+        userError: "Post Not owned by user",
+        post: null,
+      };
+    }
+    const updatedPost = await prisma.post.update({
+      where: {
+        id: Number(args.postId),
+      },
+      data: args.post,
+    });
+    console.log(updatedPost);
+    return {
+      userError: null,
+      post: updatedPost,
+    };
+  },
 };
