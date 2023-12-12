@@ -16,11 +16,15 @@ type Mutation{
          email:String!
          password:String!
         ):AuthPayload
+    addPost(
+        post:PostInput!
+        ):   PostPayload 
+    updatePost(
+        postId:ID!,
+        post:PostInput
+        ):    PostPayload
 }
-type AuthPayload{
-    userError:String
-    token:String
-}
+
 type Post{
     id:ID!
     title:String!
@@ -41,5 +45,17 @@ type Profile{
     bio:String!
     createdAt:String!
     user:User!
+}
+type AuthPayload{
+    userError:String
+    token:String
+}
+type PostPayload{
+    userError:String
+    post:Post
+}
+input PostInput{
+    title:String
+    content:String
 }
 `;
