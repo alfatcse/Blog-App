@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { jwtHelper } from "../../utils/jwtHelper";
 import config from "../../config";
 import { Secret } from "jsonwebtoken";
+import { CLIENT_RENEG_LIMIT } from "tls";
 interface userInfo {
   name: string;
   email: string;
@@ -10,7 +11,7 @@ interface userInfo {
 }
 export const Mutation = {
   signup: async (parent: any, args: userInfo, { prisma }: any) => {
-    console.log(prisma);
+    console.log(args);
     const isExist = await prisma.user.findFirst({
       where: {
         email: args.email,
@@ -32,6 +33,7 @@ export const Mutation = {
         password: hashedPassword,
       },
     });
+    console.log(newUser);
     if (args?.bio) {
       await prisma.profile.create({
         data: {
@@ -47,7 +49,7 @@ export const Mutation = {
     return { userError: null, token };
   },
   signIn: async (parent: any, args: any, { prisma }: any) => {
-    console.log(prisma);
+    console.log(args);
     const user = await prisma.user.findFirst({
       where: { email: args.email },
     });
