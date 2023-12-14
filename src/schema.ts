@@ -4,6 +4,7 @@ type Query{
     me:User
     users:[User]
     posts:[Post]
+    profile(userId:ID!):Profile
 }
 type Mutation{
     signup(
