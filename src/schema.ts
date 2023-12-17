@@ -31,7 +31,6 @@ type Mutation{
         postId:ID!,
         ):    PostPayload 
 }
-
 type Post{
     id:ID!
     title:String!
